@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banana Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <header>
+            <img src="main.png" alt="Banana Store">
+            <h1>Banana <Span>Store</Span></h1>
+        </header>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+           
+            <!--Dropdown content-->
+            <li class="dropdown">
+                  <a href="#about"><i class="fas fa-info-circle"></i> About <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-content">
+                    <li><a href="#"><i class="fas fa-building"></i> Company</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Team</a></li>
+                    <li><a href="#"><i class="fas fa-briefcase"></i> Careers</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#product"><i class="fas fa-box-open"></i> Product<i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-content">
+                <li><a href="#"><i class="fas fa-tag"></i> New Arrivals</a></li>
+                <li><a href="#"><i class="fas fa-star"></i> Best Sellers</a></li>
+                <li><a href="#"><i class="fas fa-percent"></i> Discounted</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#contact"><i class="fas fa-envelope"></i> Contact <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-content">
+                <li><a href="#"><i class="fas fa-envelope"></i> Email Us</a></li>
+                <li><a href="#"><i class="fas fa-life-ring"></i> Support</a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" id="cart-link">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                    <span id="cart-count">0</span>
+                </a>
+            </li>
+        </ul>
+        <div class="profile-card" onclick="showProfile()">
+            <img src="profile.png" alt="Emily Johnson">
+            <span>Robot Tesla</span>
+        </div>
+    </nav>
+
+
+    <!-- Modal Keranjang -->
+    <div id="cart-modal" class="cart-modal" style="display: none;">
+        <h3>Keranjang Belanja</h3>
+        <ul id="cart-items"></ul>
+        <div id="cart-total">Total: Rp. 0</div>
+        <button id="checkout-btn"><i class="fas fa-credit-card"></i> Checkout</button>
+    </div>
+
+<!-- Form Checkout Modal -->
+<div id="checkout-modal" class="checkout-modal" style="display: none;">
+    <div class="checkout-content">
+        <h3>Checkout</h3>
+        <form id="checkout-form">
+            <!-- Nama -->
+            <div class="form-group">
+                <label for="name">Nama</label>
+                <input type="text" id="name" name="name" placeholder="Nama lengkap" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="email@example.com" required>
+            </div>
+
+            <!-- Metode Pembayaran -->
+            <div class="form-group">
+                <label for="payment-method">Metode Pembayaran</label>
+                <select id="payment-method" name="payment-method" required>
+                    <option value="dana">DANA</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="bitcoin">Bitcoin</option>
+                    <option value="bca">Bank BCA</option>
+                    <option value="mandiri">Bank Mandiri</option>
+                    <option value="btn">Bank BTN</option>
+                    <option value="bri">Bank BRI</option>
+                    <option value="visa">Visa Card</option>
+                    <option value="mastercard">MasterCard</option>
+                </select>
+            </div>
+
+            <!-- Total Harga -->
+            <div class="form-group">
+                <label for="total-price">Total Harga</label>
+                <input type="text" id="total-price" name="total-price" value="Rp. 0" readonly>
+            </div>
+
+            <!-- Privacy & Policy -->
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="privacy-policy" name="privacy-policy" required>
+                <label for="privacy-policy">Saya setuju dengan <a href="#">Privacy & Policy</a></label>
+            </div>
+
+            <!-- Tombol Submit -->
+            <button type="submit" id="confirm-checkout-btn"><i class="fas fa-check-circle"></i> Konfirmasi
+                Pembayaran</button>
+        </form>
+    </div>
+</div>
+
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeProfile()">&times;</span>
+        <!-- Gambar Profil -->
+        <div class="modal-header">
+            <img src="profile.png" alt="Emily Johnson">
+        </div>
+        <h2>Robot Tesla</h2>
+        <p><strong>Email:</strong> RobotTestla.OpenAi@gmail.com</p>
+        <p><strong>Position:</strong> Web Developer</p>
+        <p class="bio"><strong>Bio:</strong> RobotTestla is a passionate web developer with over 5 years of experience in designing
+            interactive and responsive websites.</p>
+        <!-- Social Media Icons -->
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+
+        <!-- Tombol Hire Me -->
+        <button class="hire-btn"><i class="fas fa-paper-plane"></i> Hire Me</button>
+    </div>
+</div>
+
+<section id="home" class="home">
+    <div class="banner">
+        <div class="banner-content">
+                <h1>Diskon Spesial Musim Ini!</h1>
+            <p>Dapatkan hingga <strong>50% OFF</strong> untuk produk pilihan. Jangan lewatkan penawaran terbatas ini!
+            </p>
+        <a href="#" class="promo-btn">
+            <i class="fas fa-shopping-cart"></i> Lihat Penawaran
+        </a>
+        </div>
+        <div class="banner-image">
+            <img src="logo.png" alt="Diskon Banana Store">
+        </div>
+    </div>
+</section>
+
+<section id="about" class="about-section">
+    <div class="about-container">
+        <div class="about-image">
+            <img src="logo.png" alt="Banana Store" class="logo-img">
+        </div>
+        <div class="about-info">
+            <div class="text-box">
+                <h2 class="about-title">Kami <span class="highlight">Banana Store</span></h2>
+                <p class="about-description">
+                    Menyediakan buah-buahan segar dan berkualitas langsung dari petani terbaik, Banana Store berkomitmen
+                    untuk memenuhi kebutuhan hidup sehat Anda. Bergabunglah dengan kami dan nikmati setiap kesegaran di
+                    setiap gigitan!
+                </p>
+                <p class="about-description">
+                    Pilihan produk yang luas, layanan pelanggan terbaik, dan penawaran eksklusif hanya di Banana Store.
+                    Kami percaya bahwa kesegaran adalah kunci untuk hidup yang lebih baik.
+                </p>
+                <a href="#" class="about-btn">
+                    <i class="fas fa-store"></i> Jelajahi Toko
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="decorative-elements">
+        <div class="circle-element"></div>
+        <div class="circle-element-two"></div>
+        <div class="lines-element"></div>
+    </div>
+</section>
+
+<section id="product" class="product-section">
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+    <div class="container">
+        <h2>Produk Unggulan Kami</h2>
+        <div class="product-grid">
+            <div class="product-card" data-product-id="1" data-product-name="Produk 1" data-price="50000" data-image="product.png"
+                data-image="product1.png">
+                <div class="product-image">
+                    <img src="product.png" alt="Produk 1">
+                </div>
+                <div class="product-info">
+                    <h3>Produk 1</h3>
+                    <p class="description">Buah segar dari petani terbaik.</p>
+                    <span class="price">Rp. 50.000</span>
+                    <span class="discount-badge">20% OFF</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-shopping-cart"></i> Tambah
+                    </button>
+                </div>
+            </div>
+    
+            <div class="product-card" data-product-id="2" data-product-name="Produk 2" data-price="75000" data-image="product.png"
+                data-image="product2.png">
+                <div class="product-image">
+                    <img src="product.png" alt="Produk 2">
+                </div>
+                <div class="product-info">
+                    <h3>Produk 2</h3>
+                    <p class="description">Rasakan kesegaran setiap gigitannya!</p>
+                    <span class="price">Rp. 75.000</span>
+                    <span class="discount-badge">15% OFF</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-shopping-cart"></i> Tambah
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Produk lainnya -->
+            <div class="product-card" data-product-id="3" data-product-name="Produk 3" data-price="100000" data-image="product.png"
+                data-image="product3.png">
+                <div class="product-image">
+                    <img src="product.png" alt="Produk 3">
+                </div>
+                <div class="product-info">
+                    <h3>Produk 3</h3>
+                    <p class="description">Kualitas terbaik untuk kesehatan Anda.</p>
+                    <span class="price">Rp. 100.000</span>
+                    <span class="discount-badge">30% OFF</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-shopping-cart"></i> Tambah
+                    </button>
+                </div>
+            </div>
+    
+            <div class="product-card" data-product-id="4" data-product-name="Produk 4" data-price="150000" data-image="product.png"
+                data-image="product4.png">
+                <div class="product-image">
+                    <img src="product.png" alt="Produk 4">
+                </div>
+                <div class="product-info">
+                    <h3>Produk 4</h3>
+                    <p class="description">Segar dan lezat, sempurna untuk setiap hidangan!</p>
+                    <span class="price">Rp. 150.000</span>
+                    <span class="discount-badge">10% OFF</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-shopping-cart"></i> Tambah
+                    </button>
+                </div>
+            </div>
+            <!-- Produk tambahan -->
+            <div class="product-card" data-product-id="5" data-product-name="Produk 5" data-price="60000" data-image="product.png">
+                <div class="product-image">
+                    <img src="product.png" alt="Produk 5">
+                </div>
+                <div class="product-info">
+                    <h3>Produk 5</h3>
+                    <p class="description">Nikmati cita rasa tropis yang menggoda.</p>
+                    <span class="price">Rp. 60.000</span>
+                    <span class="discount-badge">25% OFF</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-shopping-cart"></i> Tambah
+                    </button>
+                </div>
+            </div>
+            <div class="product-card" data-product-id="6" data-product-name="Produk 6" data-price="90000" data-image="product.png">
+                <div class="product-image">
+                    <img src="product.png" alt="Produk 6">
+                </div>
+                <div class="product-info">
+                    <h3>Produk 6</h3>
+                    <p class="description">Kombinasi sempurna untuk smoothies segar.</p>
+                    <span class="price">Rp. 90.000</span>
+                    <span class="discount-badge">5% OFF</span>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-shopping-cart"></i> Tambah
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+<section id="contact" class="contact">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <p>Feel free to reach out to us for any queries or feedback. We're here to help!</p>
+
+        <div class="contact-grid">
+            <!-- Informasi Kontak -->
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <ul>
+                    <li><i class="fas fa-phone-alt"></i> +62 123 456 789</li>
+                    <li><i class="fas fa-envelope"></i> support@bananastore.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Jl. Pisang No. 7, Jakarta, Indonesia</li>
+                    <li><i class="fas fa-clock"></i> Mon - Fri: 9 AM - 5 PM</li>
+                    <li><i class="fas fa-comments"></i> Chat with us: <a href="https://wa.me/627760347478" target="_blank">WhatsApp</a></li>
+                    <li><i class="fab fa-facebook"></i> <a href="https://facebook.com/bananastore" target="_blank">Facebook</a></li>
+                    <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/bananastore" target="_blank">Instagram</a></li>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- Formulir Kontak -->
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required />
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Lokasi Peta -->
+            <div class="contact-map">
+                <h3>Find Us</h3>
+                <iframe src="https://www.google.com/maps/embed?pb=..." allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-about">
+            <h3>About Us</h3>
+            <p>Banana Store menyediakan produk buah berkualitas tinggi dari petani lokal. Kami berkomitmen untuk
+                memberikan yang terbaik bagi kesehatan Anda.</p>
+        </div>
+
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#product">Products</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">About Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <ul>
+                <li><i class="fas fa-phone-alt"></i> +62 123 456 789</li>
+                <li><i class="fas fa-envelope"></i> support@bananastore.com</li>
+                <li><i class="fas fa-map-marker-alt"></i> Jl. Pisang No. 7, Jakarta</li>
+            </ul>
+        </div>
+
+        <div class="footer-social">
+            <h3>Follow Us</h3>
+            <ul>
+                <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+                <li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i> Twitter</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Banana Store. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+<!-- Scroll to Top Button -->
+<button id="scrollToTopBtn" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+
+<!-- Floating Chatbot Button -->
+<div id="chatbot-toggle" class="chatbot-icon">
+    <i class="fas fa-robot"></i>
+</div>
+
+<!-- Chatbot Window -->
+<div id="chatbot-window" class="chatbot-window">
+    <div id="chatbot-header">
+        <h3>Chatbot</h3>
+        <button id="chatbot-close">&times;</button>
+    </div>
+    <div id="chatbot-messages"></div>
+    <div id="chatbot-input-container">
+        <input type="text" id="chatbot-input" placeholder="Tanya sesuatu..." />
+        <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+
+
+
+<script src='script.js'></script>
+</body>
+
+</html>
