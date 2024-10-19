@@ -1529,7 +1529,7 @@ footer {
     font-size: 16px;
 }
 
-@media (max-width: 786px) {
+@media screen and(max-width: 486px) {
     .banner {
         padding-top: 100px;
     }
@@ -1539,10 +1539,58 @@ footer {
         color: white;
         border-radius: 50%;
         position: absolute;
-        right:150px;
+        right: 150px;
         top: 0;
         padding: 2px 6px;
         font-size: 14px;
         vertical-align: top;
     }
+}
+
+@media screen and (max-width: 486px) {
+    .nav-links {
+        flex-direction: column;
+        display: none;
+        width: 50%;
+        position: absolute;
+        top: 100px;
+        right: 0;
+        border-radius: 6px;
+        background-color: #0a0f35;
+        z-index: 999;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .navbar {
+        justify-content: space-between;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+    }
+
+    .profile-card {
+        display: none;
+    }
+
+    .dropdown {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
 }
