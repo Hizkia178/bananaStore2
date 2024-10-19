@@ -1529,7 +1529,7 @@ footer {
     font-size: 16px;
 }
 
-@media screen and(max-width: 486px) {
+@media (max-width: 486px) {
     .banner {
         padding-top: 100px;
     }
@@ -1539,7 +1539,7 @@ footer {
         color: white;
         border-radius: 50%;
         position: absolute;
-        right: 150px;
+        right: 130px;
         top: 0;
         padding: 2px 6px;
         font-size: 14px;
