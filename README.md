@@ -1,2 +1,2 @@
 # bananaStore2
-banana
+Tugas akhir praktikum
