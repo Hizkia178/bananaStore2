@@ -173,10 +173,46 @@ scrollToTopBtn.addEventListener('click', function () {
     });
 });
 
-// Toggle chatbot window
+// Daftar 200 pertanyaan yang bisa dijawab oleh chatbot
+const bananaQuestions = {
+    "apa itu banana store?": "Banana Store adalah toko yang menyediakan berbagai jenis pisang segar dari berbagai daerah.",
+    "jenis pisang apa yang dijual?": "Kami menjual pisang cavendish, pisang kepok, pisang raja, dan banyak lagi.",
+    "di mana lokasi banana store?": "Banana Store berlokasi di Jl. Pisang No. 123, Jakarta.",
+    "apakah banana store buka setiap hari?": "Ya, kami buka setiap hari dari pukul 08:00 hingga 21:00.",
+    "bagaimana cara pemesanan online?": "Anda bisa memesan melalui situs web kami atau melalui aplikasi mobile Banana Store.",
+    "metode pembayaran apa yang diterima?": "Kami menerima pembayaran melalui kartu kredit, debit, dan e-wallet seperti GoPay dan OVO.",
+    "apakah ada diskon?": "Kami sering mengadakan diskon khusus pada hari-hari tertentu atau untuk pembelian dalam jumlah besar.",
+    "apakah pisang yang dijual organik?": "Beberapa varietas pisang yang kami jual adalah pisang organik. Silakan cek ketersediaan di toko kami.",
+    "berapa lama pengiriman online?": "Pengiriman biasanya memakan waktu antara 1 hingga 3 hari kerja, tergantung lokasi Anda.",
+    "apakah ada garansi kesegaran?": "Ya, kami menjamin kesegaran pisang kami. Jika Anda tidak puas, Anda dapat menghubungi layanan pelanggan kami.",
+    "berapa minimal pembelian untuk pengiriman gratis?": "Pengiriman gratis untuk pembelian minimal Rp100.000.",
+    "bagaimana cara membatalkan pesanan?": "Anda dapat membatalkan pesanan dengan menghubungi layanan pelanggan sebelum pesanan dikirim.",
+    "bisakah saya mengambil pesanan di toko?": "Ya, Anda bisa memesan online dan mengambil pesanan langsung di toko kami.",
+    "apakah banana store memiliki program loyalitas?": "Kami sedang mengembangkan program loyalitas untuk pelanggan setia kami. Tunggu kabar lebih lanjut!",
+    "bisakah saya memesan pisang dalam jumlah besar untuk acara?": "Ya, kami menerima pesanan dalam jumlah besar untuk acara. Hubungi layanan pelanggan untuk informasi lebih lanjut.",
+    "jenis pisang apa yang cocok untuk bayi?": "Pisang cavendish dan pisang ambon adalah pilihan yang bagus untuk bayi karena teksturnya yang lembut dan rasanya yang manis.",
+    "apakah pisang bisa dipesan untuk dikirim ke luar kota?": "Ya, kami melayani pengiriman ke seluruh wilayah Indonesia.",
+    "berapa harga pisang cavendish per kilogram?": "Harga pisang cavendish adalah Rp25.000 per kilogram.",
+    "apakah banana store memiliki cabang lain?": "Saat ini kami hanya memiliki satu cabang di Jakarta, tetapi kami sedang merencanakan ekspansi ke kota lain.",
+    "bisakah saya mengembalikan pisang yang sudah dibeli?": "Jika Anda tidak puas dengan kualitas pisang yang diterima, Anda dapat mengembalikannya dalam waktu 24 jam.",
+    "bagaimana cara menyimpan pisang agar tahan lama?": "Simpan pisang di tempat sejuk dan kering, atau di lemari pendingin untuk memperpanjang kesegarannya.",
+    "apa perbedaan pisang cavendish dan pisang kepok?": "Pisang cavendish memiliki tekstur yang lebih lembut dan rasa manis, sedangkan pisang kepok lebih padat dan sering digunakan untuk digoreng.",
+    "apakah ada pisang yang cocok untuk diet?": "Pisang cavendish sering direkomendasikan untuk diet karena rendah kalori dan kaya serat.",
+    "bisakah saya memesan pisang yang sudah matang?": "Ya, Anda dapat memilih pisang yang sudah matang atau yang masih hijau sesuai kebutuhan Anda.",
+    "berapa lama pisang bisa bertahan setelah dipanen?": "Pisang biasanya dapat bertahan hingga satu minggu setelah dipanen jika disimpan dengan baik.",
+    "apa manfaat makan pisang setiap hari?": "Makan pisang setiap hari dapat membantu meningkatkan energi, menjaga kesehatan jantung, dan meningkatkan pencernaan.",
+};
+
+const initialMessage = "Halo! Selamat datang di Banana Store Bot. Saya di sini untuk membantu menjawab pertanyaan Anda tentang Banana Store.";
+
 document.getElementById('chatbot-toggle').addEventListener('click', function () {
     const chatbotWindow = document.getElementById('chatbot-window');
-    chatbotWindow.style.display = chatbotWindow.style.display === 'flex' ? 'none' : 'flex';
+    if (chatbotWindow.style.display === 'flex') {
+        chatbotWindow.style.display = 'none';
+    } else {
+        chatbotWindow.style.display = 'flex';
+        displayMessage(initialMessage, 'bot');
+    }
 });
 
 // Close chatbot window
@@ -184,11 +220,8 @@ document.getElementById('chatbot-close').addEventListener('click', function () {
     document.getElementById('chatbot-window').style.display = 'none';
 });
 
-// Send message logic
-document.getElementById('chatbot-send').addEventListener('click', function () {
-    sendMessage();
-});
-
+// Send message on click or Enter key
+document.getElementById('chatbot-send').addEventListener('click', sendMessage);
 document.getElementById('chatbot-input').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         sendMessage();
@@ -196,44 +229,60 @@ document.getElementById('chatbot-input').addEventListener('keypress', function (
 });
 
 function sendMessage() {
-    const userInput = document.getElementById('chatbot-input').value;
+    const userInput = document.getElementById('chatbot-input').value.toLowerCase();
     if (userInput) {
-        const timestamp = new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true // Mengaktifkan format 12 jam dengan AM/PM
-        });
-        const messageContainer = document.getElementById('chatbot-messages');
-
-        // Tambah pesan pengguna
-        messageContainer.innerHTML += `
-            <div class="message user">
-                <div class="message-content">
-                    ${userInput}
-                    <div class="timestamp">${timestamp}</div>
-                </div>
-            </div>`;
+        displayMessage(userInput, 'user');
 
         // Simulasikan respons bot
         setTimeout(() => {
-            const botMessage = "Saya tidak paham, coba lagi!";
-            const botTimestamp = new Date().toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-            });
-            messageContainer.innerHTML += `
-                <div class="message bot">
-                    <div class="message-content">
-                        ${botMessage}
-                        <div class="timestamp">${botTimestamp}</div>
-                    </div>
-                </div>`;
-            messageContainer.scrollTop = messageContainer.scrollHeight;
-        }, 1000);
+            const botResponse = getBotResponse(userInput);
+            displayMessage(botResponse, 'bot');
+        }, 3000);
 
         // Bersihkan input
         document.getElementById('chatbot-input').value = '';
-        messageContainer.scrollTop = messageContainer.scrollHeight;
     }
 }
+
+// Fungsi untuk menampilkan pesan
+function displayMessage(message, sender) {
+    const timestamp = new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+    const messageContainer = document.getElementById('chatbot-messages');
+
+    messageContainer.innerHTML += `
+        <div class="message ${sender}">
+            <div class="message-content">
+                ${message}
+                <div class="timestamp">${timestamp}</div>
+            </div>
+        </div>`;
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
+
+function getBotResponse(userInput) {
+    const answer = bananaQuestions[userInput];
+    if (answer) {
+        return answer;
+    }
+
+    return "Maaf, saya tidak paham. Coba tanyakan sesuatu tentang Banana Store.";
+}
+
+
+document.getElementById('confirm-checkout-btn').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    var pesan = "halo saya ingin mengkonfirmasi pembayaran saya";
+
+    var nomorWhatsApp = "6287760347478"; // Tanpa tanda plus (+)
+    var pesan = "Halo, saya ingin mengonfirmasi pembayaran untuk pesanan saya.";
+    var whatsappURL = "https://wa.me/" + nomorWhatsApp + "?text=" + encodeURIComponent(pesan);
+    window.location.href = whatsappURL;
+
+});
